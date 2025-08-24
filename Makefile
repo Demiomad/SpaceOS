@@ -20,7 +20,6 @@ ASM_SRC = $(SRC_DIR)/asm/boot.asm \
 		  $(SRC_DIR)/asm/gdtasm.asm \
 		  $(SRC_DIR)/asm/israsm.asm \
 		  $(SRC_DIR)/asm/irqasm.asm \
-		  $(SRC_DIR)/asm/regdumpasm.asm \
 		  $(SRC_DIR)/asm/pageasm.asm \
 		  $(SRC_DIR)/asm/multiboot2.asm
 
@@ -52,6 +51,8 @@ create: $(KERNEL_BIN)
 	@grub-mkrescue -o $(ISO) $(ISO_DIR)
 
 $(KERNEL_BIN): $(C_OBJ) $(ASM_OBJ)
+	@echo "Creating bin directory"
+	@mkdir -p bin
 	@$(LD) $(LDFLAGS) -o $@ $^
 
 $(BUILD_DIR)/%.o: %.c

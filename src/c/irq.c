@@ -7,7 +7,7 @@ void *irq_handlers[16] = {
     0, 0, 0, 0, 0, 0, 0, 0
 };
 
-void irq_set_handler(int index, void (*handler)(struct regs *r)) {
+void _irq_set_handler(int index, void (*handler)(struct regs *r)) {
     irq_handlers[index] = handler;
 };
 
