@@ -4,24 +4,9 @@ BIN_DIR = bin
 ISO_DIR = isodir
 GRUB_DIR = $(ISO_DIR)/boot/grub
 
-C_SRC = $(SRC_DIR)/c/kernel.c \
-        $(SRC_DIR)/c/gdt.c \
-        $(SRC_DIR)/c/idt.c \
-		$(SRC_DIR)/c/printf.c \
-		$(SRC_DIR)/c/system.c \
-		$(SRC_DIR)/c/pic.c \
-		$(SRC_DIR)/c/irq.c \
-		$(SRC_DIR)/c/pit.c \
-		$(SRC_DIR)/c/paging.c \
-		$(SRC_DIR)/c/serial.c \
-		$(SRC_DIR)/c/vbe.c
+C_SRC = $(shell find src/c -name '*.c')
 
-ASM_SRC = $(SRC_DIR)/asm/boot.asm \
-		  $(SRC_DIR)/asm/gdtasm.asm \
-		  $(SRC_DIR)/asm/israsm.asm \
-		  $(SRC_DIR)/asm/irqasm.asm \
-		  $(SRC_DIR)/asm/pageasm.asm \
-		  $(SRC_DIR)/asm/multiboot2.asm
+ASM_SRC = $(shell find src/asm -name '*.asm')
 
 C_OBJ = $(C_SRC:%.c=$(BUILD_DIR)/%.o)
 ASM_OBJ = $(ASM_SRC:%.asm=$(BUILD_DIR)/%.o)
@@ -31,9 +16,9 @@ ASM = nasm
 LD = ld
 EMU = qemu-system-x86_64
 
-CFLAGS = -m32 -ffreestanding -I$(SRC_DIR)/c/include
+CFLAGS = -m32 -ffreestanding -I$(SRC_DIR)/c/include -fno-stack-protector -fno-stack-check -fno-lto -mno-mmx -mno-sse -mno-sse2 -mno-red-zone -mno-avx -mno-80387
 ASMFLAGS = -f elf32
-LDFLAGS = -T $(SRC_DIR)/linker.ld -m elf_i386
+LDFLAGS = -T $(SRC_DIR)/linker.ld -m elf_i386 -static -nostdlib
 
 KERNEL_BIN = $(BIN_DIR)/kernel.bin
 ISO = SpaceOS.iso

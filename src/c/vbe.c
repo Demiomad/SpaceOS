@@ -24,11 +24,11 @@ void vbe_init(void* info_struct) {
     address = (multiboot_uint32_t *)vbe_fb->common.framebuffer_addr;
     // test vbe
     for (size_t i = 0; i < 100; i++) {
-        set_pixel(0xFFFFFF, i, i);
+        set_pixel(0xFF0000, i, i);
     }
 }
 
 void set_pixel(int color, int x, int y) {
-    int pos = (y * (vbe_fb->common.framebuffer_pitch / 4) + x);
-    address[pos] = color;
+    uint32_t offset = y * (vbe_fb->common.framebuffer_pitch / 4) + x;
+    address[offset] = color;
 }
