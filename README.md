@@ -1,3 +1,6 @@
+> [!note]
+> This was a *really* old project I was working on before I just gave up. Don't expect updates.
+
 # SpaceOS
 An operating system made in C.
 
